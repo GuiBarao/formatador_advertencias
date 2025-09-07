@@ -1,0 +1,20 @@
+[
+  {"id": 1, "descricao": "I - Apresentar -se sob efeito de bebidas alcoólicas ou substâncias que produzam dependência física ou psíquica;"},
+  {"id": 2, "descricao": "II - Promover eventos de qualquer natureza, sem a devida autorização da direção escolar;"},
+  {"id": 3, "descricao": "III - Portar, neste recinto escolar, armas e explosivos de qualquer natureza, entorpecentes e outros objetos estranhos às atividades escolares;"},
+  {"id": 4, "descricao": "IV - Fumar neste ambiente escolar;"},
+  {"id": 5, "descricao": "V - Ausentar -se durante o período de aula, sem autorização;"},
+  {"id": 6, "descricao": "VI - Entrar em sala de aula ou dela sair sem permissão do(a) professor(a);"},
+  {"id": 7, "descricao": "VII - Formar grupos com o fim de promover algazarra, e incitar os(as) colegas a atos de rebeldia e movimentos contra normas regimentais;"},
+  {"id": 8, "descricao": "VIII - Desacatar os(as) integrantes desta escola;"},
+  {"id": 9, "descricao": "IX - Rasurar ou falsificar qualquer documento escolar;"},
+  {"id": 10, "descricao": "X - Desperdiçar materiais de uso comum pertencentes a esta escola;"},
+  {"id": 11, "descricao": "XI - Causar danos materiais e depredação ao patrimônio público;"},
+  {"id": 12, "descricao": "XII - Afrontar ou agredir professores(as), moral ou fisicamente;"},
+  {"id": 13, "descricao": "XIII - Acompanhar ou incentivar a presença de pessoas estranhas nas dependências desta escola;"},
+  {"id": 14, "descricao": "XIV - Usar aparelhos eletrônicos capazes de produzir sons e ruídos em sala de aula, quando não utilizados para fins pedagógicos;"},
+  {"id": 15, "descricao": "XV - Trazer e tomar tereré no ambiente escolar;"},
+  {"id": 16, "descricao": "XVI - Descaracterizar a camiseta do uniforme;"},
+  {"id": 17, "descricao": "XVII - Trazer livros, impressos, gravuras ou escritos considerados imorais, objetos cortantes, rádios, fogos de artifício e outros objetos que prejudiquem o processo de ensino e de aprendizagem e que possam causar acidentes pessoais;"},
+  {"id": 18, "descricao": "XVIII - Utilizar a internet para denegrir a imagem da comunidade escolar ou dos(as) seus(suas) funcionários(as)."}
+]
