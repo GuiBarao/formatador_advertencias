@@ -93,12 +93,13 @@ public class FormatadorService {
             ));
 
             dadosDocx.put("documentoSuspensao", this.tipoDocumento == TipoDocumento.SUSPENSAO);
-            dadosDocx.put("diaRetornoSuspensao", this.retornoSuspensao.getDayOfMonth());
-            dadosDocx.put("mesRetornoSuspensao", this.retornoSuspensao.getMonthValue());
-            dadosDocx.put("anoRetornoSuspensao", this.retornoSuspensao.getYear());
-
 
             if(this.tipoDocumento == TipoDocumento.SUSPENSAO) {
+                dadosDocx.put("diaRetornoSuspensao", this.retornoSuspensao.getDayOfMonth());
+                dadosDocx.put("mesRetornoSuspensao", this.retornoSuspensao.getMonthValue());
+                dadosDocx.put("anoRetornoSuspensao", this.retornoSuspensao.getYear());
+
+
                 //Sábado e domingo contabiliza na conta?
                 dadosDocx.put("diasSuspenso", ChronoUnit.DAYS.between(this.inicioSuspensao, this.retornoSuspensao));
             }

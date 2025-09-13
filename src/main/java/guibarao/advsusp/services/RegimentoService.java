@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Getter
@@ -19,8 +20,8 @@ public class RegimentoService {
 
         public RegimentoService () {
             try{
-                String CAMINHO_JSON_PROIBICOES = "src/main/resources/proibicoes.json";
-                String CAMINHO_JSON_DEVERES = "src/main/resources/deveres.json";
+                String CAMINHO_JSON_PROIBICOES = "/proibicoes.json";
+                String CAMINHO_JSON_DEVERES = "/deveres.json";
 
                 this.proibicoes = getDadosJustificativasJSON(CAMINHO_JSON_PROIBICOES);
                 this.deveres = getDadosJustificativasJSON(CAMINHO_JSON_DEVERES);
@@ -32,9 +33,13 @@ public class RegimentoService {
         }
 
         private List<Justificativa> getDadosJustificativasJSON(String caminhoJson) throws IOException {
-            ObjectMapper mapper = new ObjectMapper();
 
-            return mapper.readValue(new File(caminhoJson), new TypeReference<List<Justificativa>>(){});
+            try(InputStream is = RegimentoService.class.getResourceAsStream(caminhoJson)){
+                ObjectMapper mapper = new ObjectMapper();
+
+                return mapper.readValue(is, new TypeReference<List<Justificativa>>(){});
+            }
+
         }
 
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="telaRaiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1073.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guibarao.advsusp.controller.DocumentoController">
+   <top>
+      <MenuBar prefHeight="27.0" prefWidth="606.0" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="menu_arquivo" mnemonicParsing="false" text="Arquivo">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Pré-visuzalização do documento" />
+              <MenuItem mnemonicParsing="false" text="Exportar documento PDF" />
+                  <MenuItem fx:id="exportarDocx" mnemonicParsing="false" onAction="#onExportarDocx" text="Exportar documento DOCX" />
+            </items>
+          </Menu>
+          <Menu fx:id="menu_configuracao" mnemonicParsing="false" text="Configuração">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Editar opções de deveres" />
+                  <MenuItem mnemonicParsing="false" text="Editar opções de proibições" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox fx:id="dados_suspensão" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="676.0" prefWidth="405.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="data_documento" prefHeight="64.0" prefWidth="208.0">
+               <children>
+                  <Label fx:id="label_data" text="Selecione a data do documento" />
+                  <DatePicker fx:id="select_data" prefHeight="26.0" prefWidth="165.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <TextField fx:id="input_nome_aluno" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="10.0" prefWidth="100.0" promptText="Nome do aluno">
+               <VBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="input_turma_aluno" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="10.0" prefWidth="100.0" promptText="Turma do aluno">
+               <VBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox fx:id="tipo_documento" prefHeight="25.0" prefWidth="308.0">
+               <children>
+                  <CheckBox fx:id="opcao_advertencia" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#escolheuAdvertencia" prefHeight="18.0" prefWidth="104.0" text="Advertência" />
+                  <CheckBox fx:id="opcao_suspensao" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#escolheuSuspensao" prefHeight="10.0" prefWidth="100.0" text="Suspensão" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="datas_suspensao" alignment="CENTER" prefHeight="52.0" prefWidth="386.0" spacing="15.0">
+               <children>
+                  <DatePicker fx:id="inicio_suspensao_data" prefHeight="26.0" prefWidth="165.0" promptText="Início da suspensão" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="á" />
+                  <DatePicker fx:id="retorno_suspensao_data" prefHeight="26.0" prefWidth="165.0" promptText="Data de retorno" />
+               </children>
+            </HBox>
+            <TextField fx:id="descricao_fatos" alignment="CENTER" layoutX="31.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="153.0" prefWidth="386.0" promptText="Descrição dos fatos" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="deveres" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="263.0">
+                            <children>
+                                <Text fx:id="titulo_deveres" strokeType="OUTSIDE" strokeWidth="0.0" text="Justificar com deveres" textAlignment="CENTER">
+                        <font>
+                           <Font size="19.0" />
+                        </font></Text>
+                            </children>
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+
+                        </VBox>
+            </ScrollPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="proibicoes" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="382.0" prefWidth="500.0">
+                     <children>
+                        <Text fx:id="titulo_proibicoes" strokeType="OUTSIDE" strokeWidth="0.0" text="Justificar com proibições">
+                           <font>
+                              <Font size="19.0" />
+                           </font></Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
