@@ -29,9 +29,8 @@ public class FormatadorService {
     private List<Justificativa> proibicoes = new ArrayList<>();
     private List<Justificativa> deveres = new ArrayList<>();
     private Map<String, Object> dadosDocx = new HashMap<>();
-    private final String CAMINHO_TEMPLATE_DOCX = "src/main/resources/Template.docx";
+    private final String CAMINHO_TEMPLATE_DOCX = "/Template.docx";
     private ByteArrayOutputStream templateRenderizado = new ByteArrayOutputStream();
-
 
     public void formatarDocx() throws Exception {
 
@@ -40,16 +39,21 @@ public class FormatadorService {
 
     }
 
-    private ByteArrayOutputStream renderizarTemplate() {
-        try(var tpl = XWPFTemplate.compile(this.CAMINHO_TEMPLATE_DOCX).render(dadosDocx)){
-            ByteArrayOutputStream template = new ByteArrayOutputStream();
-            tpl.write(template);
-            return template;
+    private ByteArrayOutputStream renderizarTemplate() throws IOException {
+
+        try(InputStream is = FormatadorService.class.getResourceAsStream(CAMINHO_TEMPLATE_DOCX)) {
+
+            if (is == null) {
+                throw new IOException();
+            }
+
+            try(var tpl = XWPFTemplate.compile(is).render(dadosDocx)){
+                ByteArrayOutputStream template = new ByteArrayOutputStream();
+                tpl.write(template);
+                return template;
+            }
         }
-        catch(IOException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+
     }
 
     private boolean todosDadosInseridos() {
