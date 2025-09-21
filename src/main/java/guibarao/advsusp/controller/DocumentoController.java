@@ -21,7 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -99,13 +99,13 @@ public class DocumentoController implements Initializable {
     private VBox tipo_sancao;
 
     @FXML
-    private Text titulo_deveres;
-
-    @FXML
-    private Text titulo_proibicoes;
-
-    @FXML
     private MenuItem exportarDocx;
+
+    @FXML
+    private ScrollPane scrollDeveres;
+
+    @FXML
+    private ScrollPane scrollProibicoes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,29 +123,33 @@ public class DocumentoController implements Initializable {
 
     }
 
+    private List<CheckBox> listaCheckBoxes(List<Justificativa> justificativas) {
+
+        return justificativas.stream().map((Justificativa justificativa) -> {
+            CheckBox checkBox = new CheckBox(justificativa.descricao());
+            checkBox.setUserData(justificativa);
+            checkBox.setWrapText(true);
+            checkBox.setMaxWidth(Double.MAX_VALUE);
+            checkBox.setFont(Font.font(16));
+            return checkBox;
+        }).toList();
+    }
+
     private void popularDeveres() {
         List<Justificativa> deveresModel = regimentoService.getDeveres();
 
-        List<CheckBox> opcoes = deveresModel.stream().map((Justificativa dever) -> {
-            CheckBox checkBox = new CheckBox(dever.descricao());
-            checkBox.setUserData(dever);
-            return checkBox;
-        }).toList();
+        List<CheckBox> checkBoxes = listaCheckBoxes(deveresModel);
 
-        deveres.getChildren().addAll(opcoes);
+        deveres.getChildren().addAll(checkBoxes);
 
     }
 
     private void popularProibicoes() {
         List<Justificativa> proibicoesModel = regimentoService.getProibicoes();
 
-        List<CheckBox> opcoes = proibicoesModel.stream().map((Justificativa proibicao) -> {
-            CheckBox checkBox = new CheckBox(proibicao.descricao());
-            checkBox.setUserData(proibicao);
-            return checkBox;
-        }).toList();
+        List<CheckBox> checkBoxes = listaCheckBoxes(proibicoesModel);
 
-        proibicoes.getChildren().addAll(opcoes);
+        proibicoes.getChildren().addAll(checkBoxes);
 
     }
 

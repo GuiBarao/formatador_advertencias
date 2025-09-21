@@ -86,13 +86,14 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                        <VBox fx:id="deveres" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="263.0">
+            <ScrollPane fx:id="scrollDeveres" fitToHeight="true" fitToWidth="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="deveres" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="674.0" prefWidth="263.0" spacing="20.0">
                             <children>
-                                <Text fx:id="titulo_deveres" strokeType="OUTSIDE" strokeWidth="0.0" text="Justificar com deveres" textAlignment="CENTER">
+                     <Label alignment="CENTER" prefHeight="18.0" prefWidth="316.0" text="Justificar com deveres" textAlignment="CENTER">
                         <font>
-                           <Font size="19.0" />
-                        </font></Text>
+                           <Font size="23.0" />
+                        </font>
+                     </Label>
                             </children>
                   <padding>
                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -100,18 +101,19 @@
 
                         </VBox>
             </ScrollPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <ScrollPane fx:id="scrollProibicoes" fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <content>
-                  <VBox fx:id="proibicoes" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="382.0" prefWidth="500.0">
-                     <children>
-                        <Text fx:id="titulo_proibicoes" strokeType="OUTSIDE" strokeWidth="0.0" text="Justificar com proibições">
-                           <font>
-                              <Font size="19.0" />
-                           </font></Text>
-                     </children>
+                  <VBox fx:id="proibicoes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="382.0" prefWidth="500.0" spacing="20.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="316.0" text="Justificar com proibições" textAlignment="CENTER">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
                   </VBox>
                </content>
             </ScrollPane>
