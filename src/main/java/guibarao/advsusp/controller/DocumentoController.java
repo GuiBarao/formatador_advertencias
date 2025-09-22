@@ -4,6 +4,8 @@ import guibarao.advsusp.models.Justificativa;
 import guibarao.advsusp.services.FormatadorService;
 import guibarao.advsusp.services.RegimentoService;
 import guibarao.advsusp.domain.TipoDocumento;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
@@ -16,12 +18,13 @@ import java.time.LocalDate;
 import java.util.*;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -123,17 +126,32 @@ public class DocumentoController implements Initializable {
 
     }
 
-    private List<CheckBox> listaCheckBoxes(List<Justificativa> justificativas) {
 
-        return justificativas.stream().map((Justificativa justificativa) -> {
-            CheckBox checkBox = new CheckBox(justificativa.descricao());
-            checkBox.setUserData(justificativa);
-            checkBox.setWrapText(true);
-            checkBox.setMaxWidth(Double.MAX_VALUE);
+    private List<CheckBox> listaCheckBoxes(List<Justificativa> justificativas) {
+        return justificativas.stream().map(j -> {
+            CheckBox checkBox = new CheckBox(j.descricao());
             checkBox.setFont(Font.font(16));
+            checkBox.setWrapText(true);
+            checkBox.setMnemonicParsing(false);
+
+            checkBox.setMaxWidth(Double.MAX_VALUE);
+            checkBox.setMinHeight(Region.USE_PREF_SIZE);
+            checkBox.setMaxHeight(Double.MAX_VALUE);
+
+            checkBox.prefWidthProperty().bind(
+                    deveres.widthProperty().subtract(
+                            Bindings.createDoubleBinding(() -> {
+                                Insets p = deveres.getPadding();
+                                return p == null ? 0 : (p.getLeft() + p.getRight());
+                            }, deveres.paddingProperty())
+                    )
+            );
+
             return checkBox;
         }).toList();
     }
+
+
 
     private void popularDeveres() {
         List<Justificativa> deveresModel = regimentoService.getDeveres();
@@ -141,6 +159,8 @@ public class DocumentoController implements Initializable {
         List<CheckBox> checkBoxes = listaCheckBoxes(deveresModel);
 
         deveres.getChildren().addAll(checkBoxes);
+
+
 
     }
 
@@ -196,11 +216,15 @@ public class DocumentoController implements Initializable {
                     Files.write(arquivoSelecionado.toPath(), formatadorService.getTemplateRenderizado().toByteArray());
                 }
                 catch(IOException e){
+                    System.out.println(1);
                     System.out.println(e.getMessage());
                 }
             }
         }
         catch (Exception e) {
+            System.out.println(2);
+            System.out.println(e.getCause());
+            System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
         }
 
