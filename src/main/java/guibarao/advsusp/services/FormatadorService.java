@@ -35,6 +35,7 @@ public class FormatadorService {
     public void formatarDocx() throws Exception {
 
         popularDadosDocx();
+
         this.templateRenderizado = renderizarTemplate();
 
     }

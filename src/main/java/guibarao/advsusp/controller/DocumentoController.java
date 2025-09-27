@@ -133,6 +133,7 @@ public class DocumentoController implements Initializable {
             checkBox.setFont(Font.font(16));
             checkBox.setWrapText(true);
             checkBox.setMnemonicParsing(false);
+            checkBox.setUserData(j);
 
             checkBox.setMaxWidth(Double.MAX_VALUE);
             checkBox.setMinHeight(Region.USE_PREF_SIZE);
@@ -216,7 +217,6 @@ public class DocumentoController implements Initializable {
                     Files.write(arquivoSelecionado.toPath(), formatadorService.getTemplateRenderizado().toByteArray());
                 }
                 catch(IOException e){
-                    System.out.println(1);
                     System.out.println(e.getMessage());
                 }
             }
