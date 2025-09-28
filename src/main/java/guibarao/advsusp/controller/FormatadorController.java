@@ -1,40 +1,47 @@
 package guibarao.advsusp.controller;
 
+import guibarao.advsusp.ScreenManager;
+import guibarao.advsusp.domain.TipoJustificativa;
 import guibarao.advsusp.models.Justificativa;
 import guibarao.advsusp.services.FormatadorService;
 import guibarao.advsusp.services.RegimentoService;
 import guibarao.advsusp.domain.TipoDocumento;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
-public class DocumentoController implements Initializable {
+public class FormatadorController {
 
-    private RegimentoService regimentoService;
-    private FormatadorService formatadorService;
+    private RegimentoService regimentoService = null;
+    private FormatadorService formatadorService = null;
+    private ScreenManager screenManager = null;
 
-    public DocumentoController() {}
+    private final EventHandler<ActionEvent> editarRegimento = event -> {
+        String idMenuItem = ((MenuItem) event.getSource()).getId();
+        this.screenManager.renderizaTelaEdicaoRegimento(
+                idMenuItem.equals("abrirEdicaoDeveres") ? TipoJustificativa.DEVERES : TipoJustificativa.PROIBICAO
+        );
+    };
+
+
+    public FormatadorController() {}
 
     private void setService(RegimentoService service) {
         this.regimentoService = service;
@@ -44,11 +51,12 @@ public class DocumentoController implements Initializable {
         this.formatadorService = service;
     }
 
-    @FXML
-    private BorderPane telaRaiz;
+    public void setScreenManager(ScreenManager screenManager) {
+        this.screenManager = screenManager;
+    }
 
     @FXML
-    private VBox dados_suspensão;
+    private BorderPane telaRaiz;
 
     @FXML
     private DatePicker select_data;
@@ -64,18 +72,6 @@ public class DocumentoController implements Initializable {
 
     @FXML
     private TextField input_turma_aluno;
-
-    @FXML
-    private Label label_data;
-
-    @FXML
-    private Label label_sancao;
-
-    @FXML
-    private Menu menu_arquivo;
-
-    @FXML
-    private Menu menu_configuracao;
 
     @FXML
     private CheckBox opcao_advertencia;
@@ -95,23 +91,9 @@ public class DocumentoController implements Initializable {
     @FXML
     private HBox datas_suspensao;
 
-    @FXML
-    private HBox tipo_documento;
 
     @FXML
-    private VBox tipo_sancao;
-
-    @FXML
-    private MenuItem exportarDocx;
-
-    @FXML
-    private ScrollPane scrollDeveres;
-
-    @FXML
-    private ScrollPane scrollProibicoes;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
 
         setService(new RegimentoService());
         setService(new FormatadorService());
@@ -124,6 +106,11 @@ public class DocumentoController implements Initializable {
         popularDeveres();
         popularProibicoes();
 
+    }
+
+    @FXML
+    private void editarRegimento(ActionEvent event) {
+        editarRegimento.handle(event);
     }
 
 
@@ -228,10 +215,6 @@ public class DocumentoController implements Initializable {
             System.out.println(e.getMessage());
         }
 
-
-
-
-
     }
 
     private Stage getStageAtual() {
@@ -246,7 +229,7 @@ public class DocumentoController implements Initializable {
         formatadorService.setDeveres(getDeveresSelecionados());
         formatadorService.setProibicoes(getProibicoesSelecionadas());
 
-        if(opcao_advertencia.isSelected()) {
+        if (opcao_advertencia.isSelected()) {
             formatadorService.setTipoDocumento(TipoDocumento.ADVERTENCIA);
         }
         else if(opcao_suspensao.isSelected()) {

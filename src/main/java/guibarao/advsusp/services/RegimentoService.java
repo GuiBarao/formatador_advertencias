@@ -2,6 +2,7 @@ package guibarao.advsusp.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import guibarao.advsusp.domain.TipoJustificativa;
 import guibarao.advsusp.models.Justificativa;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,13 @@ public class RegimentoService {
 
         }
 
+        public List<Justificativa> getJustificativas (TipoJustificativa tipo) {
+            return switch(tipo) {
+                case TipoJustificativa.DEVERES -> this.deveres;
+                case TipoJustificativa.PROIBICAO -> this.proibicoes;
+            };
+        }
+
         private List<Justificativa> getDadosJustificativasJSON(String caminhoJson) throws IOException {
 
             try(InputStream is = RegimentoService.class.getResourceAsStream(caminhoJson)){
@@ -41,6 +49,7 @@ public class RegimentoService {
             }
 
         }
+
 
 
 

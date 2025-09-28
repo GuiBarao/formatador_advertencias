@@ -5,6 +5,7 @@ module guibarao.advsusp {
     requires com.fasterxml.jackson.core;
     requires static lombok;
     requires poi.tl;
+    requires java.desktop;
     exports guibarao.advsusp.models to com.fasterxml.jackson.databind;
 
 

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class App extends Application {
 
@@ -14,19 +15,13 @@ public class App extends Application {
         launch(args);
     }
 
-    Stage window;
 
     @Override
     public void start(Stage stage) throws Exception {
-        window = stage;
 
-        Parent tela = FXMLLoader.load(Objects.requireNonNull(getClass().
-                getResource("/telas/Formatador.fxml")));
+        ScreenManager screenManager = new ScreenManager(stage);
+        screenManager.renderizaTelaInicial();
 
-        Scene scene = new Scene(tela);
-        window.setScene(scene);
-
-        window.show();
 
     }
 }

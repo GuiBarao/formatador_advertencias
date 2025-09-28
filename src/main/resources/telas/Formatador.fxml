@@ -15,21 +15,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="telaRaiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1073.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guibarao.advsusp.controller.DocumentoController">
+<BorderPane fx:id="telaRaiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1073.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guibarao.advsusp.controller.FormatadorController">
    <top>
       <MenuBar prefHeight="27.0" prefWidth="606.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu fx:id="menu_arquivo" mnemonicParsing="false" text="Arquivo">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Pré-visuzalização do documento" />
-              <MenuItem mnemonicParsing="false" text="Exportar documento PDF" />
                   <MenuItem fx:id="exportarDocx" mnemonicParsing="false" onAction="#onExportarDocx" text="Exportar documento DOCX" />
             </items>
           </Menu>
-          <Menu fx:id="menu_configuracao" mnemonicParsing="false" text="Configuração">
+          <Menu mnemonicParsing="false" text="Configuração">
             <items>
-              <MenuItem mnemonicParsing="false" text="Editar opções de deveres" />
-                  <MenuItem mnemonicParsing="false" text="Editar opções de proibições" />
+              <MenuItem fx:id="abrirEdicaoDeveres" mnemonicParsing="false" onAction="#editarRegimento" text="Editar opções de deveres" />
+                  <MenuItem fx:id="abrirEdicaoProibicoes" mnemonicParsing="false" onAction="#editarRegimento" text="Editar opções de proibições" />
             </items>
           </Menu>
         </menus>
