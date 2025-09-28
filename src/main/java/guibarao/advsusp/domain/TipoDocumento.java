@@ -1,8 +1,7 @@
 package guibarao.advsusp.domain;
 
-import lombok.Getter;
 
-@Getter
+
 public enum TipoDocumento {
     ADVERTENCIA("Advertência"),
     SUSPENSAO("Suspensão");
@@ -11,6 +10,10 @@ public enum TipoDocumento {
 
     TipoDocumento(String nomeTipo) {
         this.nomeTipo = nomeTipo;
+    }
+
+    public String getNomeTipo() {
+        return nomeTipo;
     }
 
 }

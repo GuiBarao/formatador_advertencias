@@ -2,8 +2,6 @@ package guibarao.advsusp.services;
 
 import guibarao.advsusp.domain.TipoDocumento;
 import guibarao.advsusp.models.Justificativa;
-import lombok.Getter;
-import lombok.Setter;
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.Numberings;
 
@@ -15,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
 public class FormatadorService {
 
     private String nomeAluno;
@@ -91,10 +87,10 @@ public class FormatadorService {
             dadosDocx.put("justificaComDeveres", !this.deveres.isEmpty());
             dadosDocx.put("descricao", this.descricao);
             dadosDocx.put("deveres", Numberings.create(
-                    deveres.stream().map(Justificativa::descricao).toArray(String[]::new)
+                    deveres.stream().map(Justificativa::getDescricao).toArray(String[]::new)
             ));
             dadosDocx.put("proibicoes", Numberings.create(
-                    proibicoes.stream().map(Justificativa::descricao).toArray(String[]::new)
+                    proibicoes.stream().map(Justificativa::getDescricao).toArray(String[]::new)
             ));
 
             dadosDocx.put("documentoSuspensao", this.tipoDocumento == TipoDocumento.SUSPENSAO);
@@ -115,5 +111,46 @@ public class FormatadorService {
         }
     }
 
+    public void setNomeAluno(String nomeAluno) {
+        this.nomeAluno = nomeAluno;
+    }
+
+    public void setTurmaAluno(String turmaAluno) {
+        this.turmaAluno = turmaAluno;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public void setDataDocumento(LocalDate dataDocumento) {
+        this.dataDocumento = dataDocumento;
+    }
+
+
+    public void setInicioSuspensao(LocalDate inicioSuspensao) {
+        this.inicioSuspensao = inicioSuspensao;
+    }
+
+    public void setRetornoSuspensao(LocalDate retornoSuspensao) {
+        this.retornoSuspensao = retornoSuspensao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+
+    public void setProibicoes(List<Justificativa> proibicoes) {
+        this.proibicoes = proibicoes;
+    }
+
+    public void setDeveres(List<Justificativa> deveres) {
+        this.deveres = deveres;
+    }
+
+    public ByteArrayOutputStream getTemplateRenderizado() {
+        return templateRenderizado;
+    }
 
 }

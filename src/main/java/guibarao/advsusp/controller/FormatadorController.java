@@ -9,11 +9,9 @@ import guibarao.advsusp.domain.TipoDocumento;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
@@ -33,27 +31,6 @@ public class FormatadorController {
     private FormatadorService formatadorService = null;
     private ScreenManager screenManager = null;
 
-    private final EventHandler<ActionEvent> editarRegimento = event -> {
-        String idMenuItem = ((MenuItem) event.getSource()).getId();
-        this.screenManager.renderizaTelaEdicaoRegimento(
-                idMenuItem.equals("abrirEdicaoDeveres") ? TipoJustificativa.DEVERES : TipoJustificativa.PROIBICAO
-        );
-    };
-
-
-    public FormatadorController() {}
-
-    private void setService(RegimentoService service) {
-        this.regimentoService = service;
-    }
-
-    private void setService(FormatadorService service) {
-        this.formatadorService = service;
-    }
-
-    public void setScreenManager(ScreenManager screenManager) {
-        this.screenManager = screenManager;
-    }
 
     @FXML
     private BorderPane telaRaiz;
@@ -65,7 +42,10 @@ public class FormatadorController {
     private TextField descricao_fatos;
 
     @FXML
-    private VBox deveres;
+    private VBox paneDeveres;
+
+    @FXML
+    private VBox paneProibicoes;
 
     @FXML
     private TextField input_nome_aluno;
@@ -80,9 +60,6 @@ public class FormatadorController {
     private CheckBox opcao_suspensao;
 
     @FXML
-    private VBox proibicoes;
-
-    @FXML
     private DatePicker retorno_suspensao_data;
 
     @FXML
@@ -91,6 +68,15 @@ public class FormatadorController {
     @FXML
     private HBox datas_suspensao;
 
+    private final EventHandler<ActionEvent> editarRegimento = event -> {
+        String idMenuItem = ((MenuItem) event.getSource()).getId();
+        this.screenManager.renderizaTelaEdicaoRegimento(
+                idMenuItem.equals("abrirEdicaoDeveres") ? TipoJustificativa.DEVERES : TipoJustificativa.PROIBICAO
+        );
+    };
+
+
+    public FormatadorController() {}
 
     @FXML
     public void initialize() {
@@ -98,14 +84,30 @@ public class FormatadorController {
         setService(new RegimentoService());
         setService(new FormatadorService());
 
+        setConfiguracoesIniciais();
+
+        popularJustificativas(this.paneDeveres, TipoJustificativa.DEVERES);
+        popularJustificativas(this.paneProibicoes, TipoJustificativa.PROIBICAO);
+
+    }
+
+    private void setConfiguracoesIniciais() {
         opcao_advertencia.setSelected(true);
         showDatasSuspensao(false);
         inicio_suspensao_data.setValue(LocalDate.now());
         select_data.setValue(LocalDate.now());
+    }
 
-        popularDeveres();
-        popularProibicoes();
+    private void setService(RegimentoService service) {
+        this.regimentoService = service;
+    }
 
+    private void setService(FormatadorService service) {
+        this.formatadorService = service;
+    }
+
+    public void setScreenManager(ScreenManager screenManager) {
+        this.screenManager = screenManager;
     }
 
     @FXML
@@ -116,22 +118,19 @@ public class FormatadorController {
 
     private List<CheckBox> listaCheckBoxes(List<Justificativa> justificativas) {
         return justificativas.stream().map(j -> {
-            CheckBox checkBox = new CheckBox(j.descricao());
-            checkBox.setFont(Font.font(16));
-            checkBox.setWrapText(true);
+            CheckBox checkBox = new CheckBox(j.getDescricao());
+
+            checkBox.getStyleClass().add("checkBox-justificativa");
+
             checkBox.setMnemonicParsing(false);
             checkBox.setUserData(j);
 
-            checkBox.setMaxWidth(Double.MAX_VALUE);
-            checkBox.setMinHeight(Region.USE_PREF_SIZE);
-            checkBox.setMaxHeight(Double.MAX_VALUE);
-
             checkBox.prefWidthProperty().bind(
-                    deveres.widthProperty().subtract(
+                    paneDeveres.widthProperty().subtract(
                             Bindings.createDoubleBinding(() -> {
-                                Insets p = deveres.getPadding();
+                                Insets p = paneDeveres.getPadding();
                                 return p == null ? 0 : (p.getLeft() + p.getRight());
-                            }, deveres.paddingProperty())
+                            }, paneDeveres.paddingProperty())
                     )
             );
 
@@ -139,27 +138,15 @@ public class FormatadorController {
         }).toList();
     }
 
+    private void popularJustificativas(Pane painelVisualizacao, TipoJustificativa tipo) {
+        List<Justificativa> justificativas = regimentoService.getJustificativas(tipo);
 
+        List<CheckBox> checkBoxes = listaCheckBoxes(justificativas);
 
-    private void popularDeveres() {
-        List<Justificativa> deveresModel = regimentoService.getDeveres();
-
-        List<CheckBox> checkBoxes = listaCheckBoxes(deveresModel);
-
-        deveres.getChildren().addAll(checkBoxes);
-
-
+        painelVisualizacao.getChildren().addAll(checkBoxes);
 
     }
 
-    private void popularProibicoes() {
-        List<Justificativa> proibicoesModel = regimentoService.getProibicoes();
-
-        List<CheckBox> checkBoxes = listaCheckBoxes(proibicoesModel);
-
-        proibicoes.getChildren().addAll(checkBoxes);
-
-    }
 
     private void showDatasSuspensao(boolean estado) {
         datas_suspensao.setVisible(estado);
@@ -209,7 +196,6 @@ public class FormatadorController {
             }
         }
         catch (Exception e) {
-            System.out.println(2);
             System.out.println(e.getCause());
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
@@ -226,8 +212,8 @@ public class FormatadorController {
         formatadorService.setDescricao(descricao_fatos.getText());
         formatadorService.setNomeAluno(input_nome_aluno.getText());
         formatadorService.setTurmaAluno(input_turma_aluno.getText());
-        formatadorService.setDeveres(getDeveresSelecionados());
-        formatadorService.setProibicoes(getProibicoesSelecionadas());
+        formatadorService.setDeveres(getJustificativasSelecionadas(TipoJustificativa.DEVERES));
+        formatadorService.setProibicoes(getJustificativasSelecionadas(TipoJustificativa.PROIBICAO));
 
         if (opcao_advertencia.isSelected()) {
             formatadorService.setTipoDocumento(TipoDocumento.ADVERTENCIA);
@@ -242,17 +228,22 @@ public class FormatadorController {
 
     }
 
-    private List<Justificativa> getProibicoesSelecionadas() {
-        return proibicoes.getChildren().stream().filter(   (Object elemento) ->
+    public Pane getPaneJustificativas(TipoJustificativa tipo) {
+        return switch (tipo) {
+            case TipoJustificativa.DEVERES -> paneDeveres;
+            case TipoJustificativa.PROIBICAO -> paneProibicoes;
+        };
+    }
+
+    private List<Justificativa> getJustificativasSelecionadas(TipoJustificativa tipo) {
+
+        Pane pane = getPaneJustificativas(tipo);
+
+        return pane.getChildren().stream().filter(   (Object elemento) ->
                                                     (elemento instanceof CheckBox && ((CheckBox) elemento).isSelected())
                                                 ).map(checkBox -> (Justificativa) checkBox.getUserData()).toList();
     }
 
-    private List<Justificativa> getDeveresSelecionados() {
-        return deveres.getChildren().stream().filter(   (Object elemento) ->
-                                                    (elemento instanceof CheckBox && ((CheckBox) elemento).isSelected())
-                                                ).map(checkBox -> (Justificativa) checkBox.getUserData()).toList();
-    }
 
 
 

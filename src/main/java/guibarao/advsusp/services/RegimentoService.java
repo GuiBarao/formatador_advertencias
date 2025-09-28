@@ -4,28 +4,25 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guibarao.advsusp.domain.TipoJustificativa;
 import guibarao.advsusp.models.Justificativa;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Getter
-@Setter
+
 public class RegimentoService {
+
+        private final String CAMINHO_JSON_PROIBICOES = "/regimento/proibicoes.json";
+        private final String CAMINHO_JSON_DEVERES = "/regimento/deveres.json";
+
 
         private List<Justificativa> deveres;
         private List<Justificativa> proibicoes;
 
         public RegimentoService () {
             try{
-                String CAMINHO_JSON_PROIBICOES = "/proibicoes.json";
-                String CAMINHO_JSON_DEVERES = "/deveres.json";
-
-                this.proibicoes = getDadosJustificativasJSON(CAMINHO_JSON_PROIBICOES);
-                this.deveres = getDadosJustificativasJSON(CAMINHO_JSON_DEVERES);
+                this.proibicoes = getDadosJustificativasJSON(TipoJustificativa.PROIBICAO);
+                this.deveres = getDadosJustificativasJSON(TipoJustificativa.DEVERES);
             } catch (IOException e) {
                 System.out.println("Erro ao ler os arquivos de proibições e deveres.");
                 throw new RuntimeException(e);
@@ -40,12 +37,28 @@ public class RegimentoService {
             };
         }
 
-        private List<Justificativa> getDadosJustificativasJSON(String caminhoJson) throws IOException {
+        private String getPathJustificativasJSON(TipoJustificativa tipo) {
+            return switch (tipo) {
+                case TipoJustificativa.DEVERES -> this.CAMINHO_JSON_DEVERES;
+                case TipoJustificativa.PROIBICAO -> this.CAMINHO_JSON_PROIBICOES;
+            };
+        }
+
+        private List<Justificativa> getDadosJustificativasJSON(TipoJustificativa tipo) throws IOException {
+
+            String caminhoJson = getPathJustificativasJSON(tipo);
+
+            if(caminhoJson == null) return null;
 
             try(InputStream is = RegimentoService.class.getResourceAsStream(caminhoJson)){
                 ObjectMapper mapper = new ObjectMapper();
 
-                return mapper.readValue(is, new TypeReference<List<Justificativa>>(){});
+                List<Justificativa> desserializados = mapper.readValue(is,
+                        new TypeReference<List<Justificativa>>(){});
+
+                desserializados.forEach(j -> j.setTipo(tipo));
+
+                return desserializados;
             }
 
         }

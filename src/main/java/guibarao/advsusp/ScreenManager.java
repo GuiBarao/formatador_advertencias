@@ -22,17 +22,27 @@ public class ScreenManager {
     }
 
 
+    private void setStyleSheet(Scene scene, String fileName) {
+        scene.getStylesheets().add(Objects.requireNonNull(getClass()
+                .getResource("/stylesSheets/".concat(fileName))).toExternalForm());
+    }
+
+    private FXMLLoader getFXMLOADER(String nomeView) {
+        return new FXMLLoader(Objects.requireNonNull(getClass().
+                getResource("/views/".concat(nomeView))));
+    }
+
     public void renderizaTelaInicial() {
 
         try {
-            FXMLLoader telaLoader = new FXMLLoader(Objects.requireNonNull(getClass().
-                    getResource("/telas/Formatador.fxml")));
+            FXMLLoader telaLoader = getFXMLOADER("Formatador.fxml");
 
             Parent tela = telaLoader.load();
 
             ((FormatadorController) telaLoader.getController()).setScreenManager(this);
 
             Scene scene = new Scene(tela);
+            setStyleSheet(scene, "formatadorStyle.css");
 
             window.setScene(scene);
 
@@ -46,8 +56,7 @@ public class ScreenManager {
     public void renderizaTelaEdicaoRegimento(TipoJustificativa tipo) {
         try {
 
-            FXMLLoader loaderTela = new FXMLLoader(Objects.requireNonNull(getClass().
-                    getResource("/telas/EdicaoRegimento.fxml")));
+            FXMLLoader loaderTela = getFXMLOADER("EdicaoRegimento.fxml");
 
             Parent telaEdicao = loaderTela.load();
 
@@ -57,13 +66,17 @@ public class ScreenManager {
             regimentoController.customInitialize();
 
             Stage edicaoWindow = new Stage();
-            edicaoWindow.setScene(new Scene(telaEdicao));
+
+            Scene sceneEdicao = new Scene(telaEdicao);
+
+            setStyleSheet(sceneEdicao, "edicaoRegimentoStyle.css");
+
+            edicaoWindow.setScene(sceneEdicao);
             edicaoWindow.centerOnScreen();
             edicaoWindow.resizableProperty().setValue(Boolean.TRUE);
             edicaoWindow.initOwner(window);
 
             edicaoWindow.show();
-
 
         }
         catch(IOException e) {

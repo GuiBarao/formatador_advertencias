@@ -65,7 +65,7 @@
       </Button>
       <ScrollPane prefHeight="574.0" prefWidth="900.0">
          <content>
-            <VBox fx:id="regimento" alignment="TOP_CENTER" prefHeight="562.0" prefWidth="898.0" spacing="10.0">
+            <VBox fx:id="paneRegimento" alignment="TOP_CENTER" prefHeight="562.0" prefWidth="898.0" spacing="10.0">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>

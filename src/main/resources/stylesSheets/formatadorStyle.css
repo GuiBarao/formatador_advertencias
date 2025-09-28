@@ -1,0 +1,7 @@
+.checkBox-justificativa {
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-max-width: infinity;
+    -fx-max-height: infinity;
+
+}
