@@ -9,6 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -175,6 +176,11 @@ public class DocumentoController implements Initializable {
         try {
             formatadorService.formatarDocx();
 
+            ByteArrayOutputStream documento = formatadorService.getTemplateRenderizado();
+            if(documento == null) {
+                throw new RuntimeException("Erro ao formatar o arquivo.");
+            }
+
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Salvar documento");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word (*.docx)", "*.docx"));
@@ -185,7 +191,7 @@ public class DocumentoController implements Initializable {
 
             if(arquivoSelecionado != null) {
                 try {
-                    Files.write(arquivoSelecionado.toPath(), formatadorService.getTemplateRenderizado().toByteArray());
+                    Files.write(arquivoSelecionado.toPath(), documento.toByteArray());
                 }
                 catch(IOException e){
                     System.out.println(e.getMessage());

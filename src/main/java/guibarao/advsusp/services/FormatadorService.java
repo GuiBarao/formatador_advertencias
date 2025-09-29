@@ -67,11 +67,12 @@ public class FormatadorService {
             return false;
         }
         else {
+
             if(tipoDocumento == TipoDocumento.SUSPENSAO) {
-                return nomeAluno != null && turmaAluno != null && dataDocumento != null && descricao != null && retornoSuspensao != null && inicioSuspensao != null;
+                return !nomeAluno.isEmpty() && !turmaAluno.isEmpty() && dataDocumento != null && descricao != null && retornoSuspensao != null && inicioSuspensao != null;
             }
             else {
-                return nomeAluno != null && turmaAluno != null && dataDocumento != null && descricao != null;
+                return !nomeAluno.isEmpty() && !turmaAluno.isEmpty() && dataDocumento != null && descricao != null;
             }
         }
 

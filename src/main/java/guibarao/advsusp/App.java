@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -19,6 +20,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
+
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass()
+                .getResourceAsStream("/icons/normus.png"))));
+
+        stage.setTitle("Normus");
 
         Parent tela = FXMLLoader.load(Objects.requireNonNull(getClass().
                 getResource("/telas/Formatador.fxml")));
