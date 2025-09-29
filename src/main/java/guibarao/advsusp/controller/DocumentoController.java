@@ -48,9 +48,6 @@ public class DocumentoController implements Initializable {
     private BorderPane telaRaiz;
 
     @FXML
-    private VBox dados_suspensão;
-
-    @FXML
     private DatePicker select_data;
 
     @FXML
@@ -64,18 +61,6 @@ public class DocumentoController implements Initializable {
 
     @FXML
     private TextField input_turma_aluno;
-
-    @FXML
-    private Label label_data;
-
-    @FXML
-    private Label label_sancao;
-
-    @FXML
-    private Menu menu_arquivo;
-
-    @FXML
-    private Menu menu_configuracao;
 
     @FXML
     private CheckBox opcao_advertencia;
@@ -95,20 +80,6 @@ public class DocumentoController implements Initializable {
     @FXML
     private HBox datas_suspensao;
 
-    @FXML
-    private HBox tipo_documento;
-
-    @FXML
-    private VBox tipo_sancao;
-
-    @FXML
-    private MenuItem exportarDocx;
-
-    @FXML
-    private ScrollPane scrollDeveres;
-
-    @FXML
-    private ScrollPane scrollProibicoes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

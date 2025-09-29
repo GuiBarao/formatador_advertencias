@@ -21,15 +21,7 @@
         <menus>
           <Menu fx:id="menu_arquivo" mnemonicParsing="false" text="Arquivo">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Pré-visuzalização do documento" />
-              <MenuItem mnemonicParsing="false" text="Exportar documento PDF" />
                   <MenuItem fx:id="exportarDocx" mnemonicParsing="false" onAction="#onExportarDocx" text="Exportar documento DOCX" />
-            </items>
-          </Menu>
-          <Menu fx:id="menu_configuracao" mnemonicParsing="false" text="Configuração">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Editar opções de deveres" />
-                  <MenuItem mnemonicParsing="false" text="Editar opções de proibições" />
             </items>
           </Menu>
         </menus>
